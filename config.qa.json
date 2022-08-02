@@ -1,0 +1,7 @@
+{
+	"environment": "qa",
+    "DB_STRING":"",
+    "DB_NAME":"",
+    "CONTEST_STATUS_SCHEDULER": false,
+    "ENV":"qa"
+}

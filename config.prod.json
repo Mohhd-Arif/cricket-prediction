@@ -1,0 +1,7 @@
+{
+	"environment": "prod",
+    "DB_STRING":"",
+    "DB_NAME":"",
+    "CONTEST_STATUS_SCHEDULER": false,
+    "ENV":"prod"
+}
