@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "root123",
-    "database": "sanaparlourDB",
+    "database": "cricket",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
@@ -19,5 +19,12 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
+  },
+  "createDB":{
+    "user": "postgres",
+    "password": "root123",
+    "host": "127.0.0.1",
+    "database": "postgres",
+    "db":"cricket"
   }
 }

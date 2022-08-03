@@ -2,7 +2,7 @@ require('dotenv').config({ path: './variables.env' });
 const crypto = require('../helpers/crypto');
 const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
-const { log } = require('winston');
+const logger = require('../helpers/logger');
 
 exports.createUser = async (req, res) => {
     req.assert('firstName', 'first name cannot be empty.').notEmpty();
@@ -21,7 +21,7 @@ exports.createUser = async (req, res) => {
     } else {
         try {
             var userDetails = req.body;
-            console.log('---------user-create-----------');
+            logger.debug('---------user-create-----------');
             let password = userDetails.password;
             let encryptedPassword = crypto.encrypt(password);
             userDetails.password = encryptedPassword;
@@ -29,7 +29,7 @@ exports.createUser = async (req, res) => {
             res.status(200).json({ status_code: 200, status: 'success', message: 'user added'});
         } catch (err) {
             // await debug.addRouteDebug({route_name: "createAdmin", debug_details: err.stack });
-            console.log(err);
+            logger.debug(err);
             res.status(500).json({ status_code: 500, status: 'failure', message: err.message });
         }
     }
@@ -44,7 +44,7 @@ exports.adminLogin = async (req, res) => {
     } else {
         try {
             var inputData = req.body;
-            console.log('---------Admin-login-----------');
+            logger.debug('---------Admin-login-----------');
             let admin = await userService.findUserByEmail(inputData.email);
             if(admin != null){
                 if(crypto.decrypt(admin.password) == inputData.password){
@@ -109,7 +109,7 @@ exports.adminLogin = async (req, res) => {
 
 // exports.findUser = async (req, res) => {
 //     try {
-//      // console.log(req.cookies);
+//      // logger.debug(req.cookies);
 //       userService.getTokenById(12);
 //       res.json({data:"success"});
 //     } catch (error) {  
