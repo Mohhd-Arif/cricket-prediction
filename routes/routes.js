@@ -5,7 +5,7 @@ const router = express.Router();
 //Middlewares & Controllers
 const auth = require('../middlewares/auth');
 
-const userController = require('../controllers/customerController');
+const userController = require('../controllers/userController');
 const teamController = require('../controllers/teamController');
 //const ueController = require('../controllers/ueController');
 
@@ -19,6 +19,7 @@ router.post('/login', userController.adminLogin);
 
 //team related API's
 router.post('/team', teamController.createTeam);
+router.post('/teamsession', teamController.createTeamSession);
 
 
 app.use('/api/v1/', router);

@@ -17,6 +17,7 @@ exports.createUser = async (req, res) => {
       .withMessage("Password can contain max 20 characters");
     var errors = req.validationErrors();
     if (errors) {
+        logger.fatal(errors)
         return res.send({ status_code: 400, status: 'failure', message: errors })
     } else {
         try {
@@ -29,7 +30,7 @@ exports.createUser = async (req, res) => {
             res.status(200).json({ status_code: 200, status: 'success', message: 'user added'});
         } catch (err) {
             // await debug.addRouteDebug({route_name: "createAdmin", debug_details: err.stack });
-            logger.debug(err);
+            logger.error(err);
             res.status(500).json({ status_code: 500, status: 'failure', message: err.message });
         }
     }

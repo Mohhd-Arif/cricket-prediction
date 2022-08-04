@@ -14,10 +14,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   TTwentyMatchSession.init({
-    sixOver: DataTypes.INTEGER,
-    tenOver: DataTypes.INTEGER,
-    fifteenOver: DataTypes.INTEGER,
-    twentyOver: DataTypes.INTEGER
+    teamId: {
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
+    sixOver: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      default:0
+    },
+    tenOver: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      default:0
+    },
+    fifteenOver: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      default:0
+    },
+    twentyOver: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      default:0
+    }
   }, {
     sequelize,
     modelName: 'TTwentyMatchSession',
