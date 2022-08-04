@@ -1,4 +1,4 @@
-# sanaparlour
+# cricket prediction app
 
 #table create
 
