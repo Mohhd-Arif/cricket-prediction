@@ -59,6 +59,8 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.BOOLEAN,
       defaultValue: false
     },
+    otp:DataTypes.INTEGER,
+    otpSentTime:DataTypes.BIGINT,
     loginToken: DataTypes.STRING,
     tokenExpires: DataTypes.INTEGER,
     lastLogin: DataTypes.INTEGER,

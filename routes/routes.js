@@ -15,10 +15,12 @@ const teamController = require('../controllers/teamController');
 
 //User related api's
 router.post('/register', userController.createUser);
-router.post('/login', userController.adminLogin);
+router.post('/login', userController.userLogin);
+router.put('/otp', userController.getOtp);
+router.post('/otp', userController.verifyUser);
 
 //team related API's
-router.post('/team', teamController.createTeam);
+router.post('/team',auth.authenticateSession, teamController.createTeam);
 router.post('/teamsession', teamController.createTeamSession);
 
 

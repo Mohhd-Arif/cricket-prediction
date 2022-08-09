@@ -15,7 +15,7 @@ exports.createTeam = async (req, res) => {
             await teamService.createTeam(teamDetails);
             res.status(200).json({ status_code: 200, status: 'success', message: 'team added'});
         } catch (err) {
-            logger.debug(err);
+            logger.error(err);
             res.status(500).json({ status_code: 500, status: 'failure', message: err.message });
         }
     }

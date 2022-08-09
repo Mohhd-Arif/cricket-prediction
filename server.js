@@ -25,6 +25,6 @@ app.use(express.json({}));
 
 const routes = require('./routes/routes.js');
 app.use('/', routes);
-app.listen(8000,()=>logger.debug(chalk.green.bold("listening on port 8000...")));
+app.listen(8000,()=>logger.custom(chalk.green.bold("listening on port 8000...")));
 
 module.exports = app;

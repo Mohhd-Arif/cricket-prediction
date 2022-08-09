@@ -14,7 +14,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Team.init({
-    name: DataTypes.STRING
+    name: {
+      type:DataTypes.STRING,
+      trim:true,
+      lowercase: true,
+      allowNull: {
+        arg:false,
+        msg:"Please enter team name"
+      },
+      unique: {
+        arg: true,
+        msg: 'Team Already Exist!!!!.'
+      },
+    },
   }, {
     sequelize,
     modelName: 'Team',

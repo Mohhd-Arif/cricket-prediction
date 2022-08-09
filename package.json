@@ -26,6 +26,7 @@
     "sequelize-cli": "^6.4.1",
     "sequelize-transforms": "^2.0.0",
     "short-uuid": "^4.2.0",
+    "twilio": "^3.80.0",
     "uuid": "^8.3.2"
   }
 }

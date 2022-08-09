@@ -50,8 +50,8 @@ exports.findUser = async (mobile_number) => {
 
 }
 
-exports.findUserByEmail = async (mobile_number) => {
-    return await models.Users.findOne({ email: mobile_number })
+exports.findUserByEmail = async (email) => {
+    return await models.Users.findOne({where: {email} })
 }
 
 exports.findActiveUserByMobileNumber = async (mobile_number) => {
@@ -59,7 +59,7 @@ exports.findActiveUserByMobileNumber = async (mobile_number) => {
 }
 
 exports.findByIdAndUpdate = async (id, data) => {
-    return await User.findByIdAndUpdate(id, { $set: data }, { safe: true, upsert: false, new: false });
+    return await models.Users.update(data,{where:{id}})
 }
 exports.findReferralCode = async (referral_code) => {
     
