@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       unique: {
         arg: true,
-        msg: 'Already registered!!!!. Please Login'
+        msg: 'User already registered. Please Login'
       },
     },
     password: {

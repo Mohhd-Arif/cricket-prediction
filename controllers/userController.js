@@ -8,6 +8,8 @@ const sendOtp = require('../helpers/sendOtp')
 const logger = require('../helpers/logger');
 
 exports.createUser = async (req, res) => {
+    logger.debug('---------user-create-----------',req.body);
+
     req.assert('firstName', 'first name cannot be empty.').notEmpty();
     req.assert('email', 'email cannot be empty.').isEmail().notEmpty();
     req.assert('password', 'password cannot be empty.').notEmpty().isLength({
@@ -20,12 +22,12 @@ exports.createUser = async (req, res) => {
       .withMessage("Password can contain max 20 characters");
     var errors = req.validationErrors();
     if (errors) {
-        logger.fatal(errors)
-        return res.send({ status_code: 400, status: 'failure', message: errors })
+        logger.fatal(JSON.stringify(errors))
+        // console.log(errors);
+        return res.status(500).send({ status_code: 400, status: 'failure', message: errors })
     } else {
         try {
             var userDetails = req.body;
-            logger.debug('---------user-create-----------');
             let password = userDetails.password;
             let encryptedPassword = crypto.encrypt(password);
             userDetails.password = encryptedPassword;
@@ -44,7 +46,7 @@ exports.userLogin = async (req, res) => {
     req.assert('password', 'password cannot be empty.').notEmpty();
     var errors = req.validationErrors();
     if (errors) {
-        return res.send({ status_code: 400, status: 'failure', message: errors })
+        return res.status(500).send({ status_code: 400, status: 'failure', message: errors })
     } else {
         try {
             var inputData = req.body;
@@ -52,12 +54,12 @@ exports.userLogin = async (req, res) => {
             if(user != null){
                 if(crypto.decrypt(user.password) == inputData.password){
                     let token =await auth.createToken(user);
-                    res.status(200).json({ status_code: 200, status: 'success', message: 'all user details',data:{token}});
+                    res.status(200).json({ status_code: 200, status: 'success', message: 'User Logged In successfully',data:{token}});
                 } else {
                     res.status(405).json({ status_code: 405, status: 'failure', message: 'invalid credentials' });
                 }
             } else {
-                res.status(200).json({ status_code: 405, status: 'failure', message: 'user not found' });
+                res.status(405).json({ status_code: 405, status: 'failure', message: 'user not found' });
             }
         } catch (err) {
             logger.error(err)
