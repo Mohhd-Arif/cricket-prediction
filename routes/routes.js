@@ -17,7 +17,7 @@ const teamController = require('../controllers/teamController');
 router.post('/register', userController.createUser);
 router.post('/login', userController.userLogin);
 router.put('/otp', userController.getOtp);
-router.post('/otp', userController.verifyUser);
+router.post('/otp', userController.verifyOtp);
 
 //team related API's
 router.post('/team',auth.authenticateSession, teamController.createTeam);

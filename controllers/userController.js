@@ -85,18 +85,21 @@ let isOtpExpired = async (otpTime)=>{
 }
 
 
-exports.verifyUser = async (req, res) => {
-    logger.debug("inside verify user");
+exports.verifyOtp = async (req, res) => {
     req.assert('OTP', 'OTP cannot be empty.').notEmpty();
     req.assert('email', 'Email cannot be empty.').notEmpty();
+    req.assert('type', 'type cannot be empty.').notEmpty();
+    logger.debug("inside verify user",req.body);
     var errors = req.validationErrors();
     if (errors) {
-        return res.send({ status_code: 400, status: 'failure', message: errors })
+        return res.status(500).send({ status_code: 400, status: 'failure', message: errors })
     } else {
         try {
+            type = req.body.type = req.body.type.toLowerCase();
             var inputData = req.body;
             let user = await userService.findUserByEmail(inputData.email);
-            await isVerifiedUser(user.verified);
+            if(type == 'verifyuser')
+                await isVerifiedUser(user.verified);
             await isOtpExpired(user.otpSentTime);
             if(user != null){
                 if(user.otp == inputData.OTP){
@@ -109,26 +112,31 @@ exports.verifyUser = async (req, res) => {
                 res.status(200).json({ status_code: 404, status: 'failure', message: 'user not found' });
             }
         } catch (err) {
+            logger.fatal(err)
             res.status(500).json({ status_code: 500, status: 'failure', message: err.message });
         }
     }
 }
 
 exports.getOtp = async (req, res) => {
-    logger.debug("inside get OTP",req.body);
     req.assert('email', 'Email cannot be empty.').notEmpty();
+    req.assert('phone', 'Phone cannot be empty.').notEmpty();
+    req.assert('type', 'type cannot be empty.').notEmpty();
+    logger.debug("inside get OTP",req.body);
     var errors = req.validationErrors();
     if (errors) {
         return res.send({ status_code: 400, status: 'failure', message: errors })
     } else {
+        type = req.body.type = req.body.type.toLowerCase();
         try {
             var inputData = req.body;
             let user = await userService.findUserByEmail(inputData.email);
-            await isVerifiedUser(user.verified);
+            if(type == 'verifyuser')
+                await isVerifiedUser(user.verified);
             if(user != null ){
                 let otp = await helper.generateOtp();
                 await userService.findByIdAndUpdate(user.id,{otp,otpSentTime:Date.now()})
-                await sendOtp.whatsapp(otp);
+                await sendOtp.whatsapp(otp,req.body.locale+req.body.phone);
                 res.status(200).json({ status_code: 200, status: 'success', message: 'Otp sent successfully'});
             } else {
                 res.status(404).json({ status_code: 405, status: 'failure', message: 'user not found' });
