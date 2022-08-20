@@ -18,6 +18,7 @@ router.post('/register', userController.createUser);
 router.post('/login', userController.userLogin);
 router.put('/otp', userController.getOtp);
 router.post('/otp', userController.verifyOtp);
+router.put('/password', userController.resetPassword);
 
 //team related API's
 router.post('/team',auth.authenticateSession, teamController.createTeam);
