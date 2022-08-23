@@ -54,7 +54,8 @@ exports.userLogin = async (req, res) => {
             if (user != null) {
                 if (crypto.decrypt(user.password) == inputData.password) {
                     let token = await auth.createToken(user);
-                    res.status(200).json({ status_code: 200, status: 'success', message: 'User Logged In successfully', data: { token } });
+                    let obj = {id,email,usertype,verified,isActive} = user;
+                    res.status(200).json({ status_code: 200, status: 'success', message: 'User Logged In successfully', data: { token,id,email,usertype,verified,isActive } });
                 } else {
                     res.status(405).json({ status_code: 405, status: 'failure', message: 'invalid credentials' });
                 }
