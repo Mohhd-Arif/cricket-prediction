@@ -14,3 +14,7 @@ package-lock.json
 #config.local.json
 #config.prod.json
 DS_Store
+
+#Environment Files
+.env
+variables.env
