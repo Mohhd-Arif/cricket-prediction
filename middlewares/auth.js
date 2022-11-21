@@ -14,6 +14,11 @@ exports.authenticateSession = async (req, res, next) => {
             next();
         } catch (error) {
             console.log('TOKEN-AUTHENTICATE-ERROR');
+            return res.status(403).send({
+                status_code: 403,
+                success: false,
+                message: 'Token Expired'
+            });
         }
     } else {
         console.log('TOKEN-NOT-FOUND');

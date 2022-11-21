@@ -22,9 +22,9 @@ app.use(expressValidator());
 app.use(cors());
 
 app.use(express.json({}));
-
+logger.debug(process.env.JWT_SECRET)
 const routes = require('./routes/routes.js');
 app.use('/', routes);
-app.listen(8000,()=>logger.custom(chalk.green.bold("listening on port 8000...")));
+app.listen(process.env.PORT,()=>logger.custom(chalk.green.bold(`Listening on port ${process.env.PORT}...`)));
 
 module.exports = app;
